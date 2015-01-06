@@ -17,3 +17,6 @@
 // });
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@fb']);
+Route::get('/obtenerGrupos', ['as' => 'home', 'uses' => 'HomeController@obtenerGrupos']);
+Route::get('/pruebin', ['as' => 'home', 'uses' => 'HomeController@pruebin']);
+Route::get('/grupo', ['as' => 'home', 'uses' => 'HomeController@grupo']);
