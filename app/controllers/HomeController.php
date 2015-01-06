@@ -41,4 +41,17 @@ class HomeController extends BaseController {
 		//$form = $crawler->selectButton('Actualizar estado')->form();
 	}
 
+	public function grupo(){
+
+		$client = new Client();
+		$crawler = $client->request('GET', 'https://m.facebook.com/groups/211205422237054/');
+
+		$form = $crawler->selectButton('Iniciar sesión')->form();
+		$crawler = $client->submit($form, array('email' => 'harrykeyber@gmail.com', 'pass' => 'strong.10'));
+		$form = $crawler->selectButton('Publicar')->form();
+		$crawler = $client->submit($form, array('xc_message' => 'Hola'));
+		dd($crawler->html());
+		//https://m.facebook.com/groups/211205422237054/
+	}
+
 }

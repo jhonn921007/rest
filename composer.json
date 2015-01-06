@@ -6,8 +6,9 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"fabpot/goutte": "~2.0"
+		"fabpot/goutte": "*"
 	},
+
 	"autoload": {
 		"classmap": [
 			"app/commands",
