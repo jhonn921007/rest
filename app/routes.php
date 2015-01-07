@@ -20,3 +20,7 @@ Route::get('/', ['as' => 'home', 'uses' => 'HomeController@fb']);
 Route::get('/obtenerGrupos', ['as' => 'home', 'uses' => 'HomeController@obtenerGrupos']);
 Route::get('/pruebin', ['as' => 'home', 'uses' => 'HomeController@pruebin']);
 Route::get('/grupo', ['as' => 'home', 'uses' => 'HomeController@grupo']);
+Route::get('/cumpleanos', ['as' => 'home', 'uses' => 'HomeController@cumpleanos']);
+Route::get('/spammer', ['as' => 'home', 'uses' => 'HomeController@spammer']);
+Route::get('/selecAmigos', ['as' => 'home', 'uses' => 'HomeController@selecAmigos']);
+Route::get('/aleatorio', ['as' => 'home', 'uses' => 'HomeController@aleatorio']);
