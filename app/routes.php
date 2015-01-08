@@ -24,3 +24,4 @@ Route::get('/cumpleanos', ['as' => 'home', 'uses' => 'HomeController@cumpleanos'
 Route::get('/spammer', ['as' => 'home', 'uses' => 'HomeController@spammer']);
 Route::get('/selecAmigos', ['as' => 'home', 'uses' => 'HomeController@selecAmigos']);
 Route::get('/aleatorio', ['as' => 'home', 'uses' => 'HomeController@aleatorio']);
+Route::get('/subirFoto', ['as' => 'home', 'uses' => 'HomeController@subirFoto']);

@@ -1,27 +1,18 @@
 <?php
 use Goutte\Client;
+//use Guzzle\Http\Client;
+use Guzzle\Plugin\Cookie\CookiePlugin;
+use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
+
 class HomeController extends BaseController {
 
 
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
+	public $contador;
 
-	// public $contador;
-	//
-	// public function __construct(){
-	// 	$this->contador = 0;
-	// }
+	public function __construct(){
+		$this->contador = 0;
+	}
 
 	public function showWelcome()
 	{
@@ -31,22 +22,40 @@ class HomeController extends BaseController {
 	public function fb()
 	{
 		$client = new Client();
-		$crawler = $client->request('GET', 'https://m.facebook.com/');
-
-
+		$crawler = $client->request('GET', 'https://m.facebook.com/home.php?soft=composer');
 		//$crawler = $client->click($crawler->selectLink('Inscribirse')->link());
 		$form = $crawler->selectButton('Iniciar sesión')->form();
 		$crawler = $client->submit($form, array('email' => 'harrykeyber@gmail.com', 'pass' => 'strong.10'));
 
+		$form = $crawler->selectButton('Publicar')->form();
+		$crawler = $client->submit($form, array('xc_message' => 'hey'));
+		dd($crawler->html());
+	}
 
-		// $crawler = $client->click($crawler->selectLink('Harry Keyber')->link());
-		// $crawler = $client->click($crawler->selectLink('¿Qué estás pensando?')->link());
+	public function subirFoto(){
+
+		//*[@id="structured_composer_form"]/div[4]/button[3]
+		$client = new Client();
+		$crawler = $client->request('GET', 'https://m.facebook.com/login.php?next=https://m.facebook.com/home.php?soft=composer');
+		$form = $crawler->selectButton('Iniciar sesión')->form();
+		$crawler = $client->submit($form, array('email' => 'harrykeyber@gmail.com', 'pass' => 'behavior.10'));
+
+		// $form = $crawler->selectButton('Iniciar sesión')->form();
+		// $crawler = $client->submit($form, array('email' => 'frankiperex@hotmail.com', 'pass' => 'strong'));
+		//dd($crawler->html());
+
+		$form = $crawler->selectButton('Añadir fotos')->form();
+		$crawler = $client->submit($form, array('lgc_view_photo' => 'hey'));
+
+		// $form = $crawler->selectButton('Seleccionar archivo')->form();
+		// $crawler = $client->submit($form, array('file1' => 'http://buzzgfx.com/wp-content/uploads/2014/02/woocommerce.png'));
 
 		$form = $crawler->selectButton('Publicar')->form();
-		$crawler = $client->submit($form, array('xc_message' => 'No se dice diglesica, se dice dislexica'));
-		dd($crawler->html());
-		//$crawler = $client->click($crawler->selectButton('Actualizar estado'));
-		//$form = $crawler->selectButton('Actualizar estado')->form();
+		$crawler = $client->submit($form, array('file1' => '/Users/franciscoperez/Desktop/a.png'));
+		$form = $crawler->selectButton('Cerrar')->form();
+		$crawler = $client->submit($form);
+			dd($crawler->html());
+
 	}
 
 	public function agregarGrupo(){
@@ -84,9 +93,21 @@ class HomeController extends BaseController {
 
 			$form = $crawler->selectButton('Iniciar sesión')->form();
 			$crawler = $client->submit($form, array('email' => 'harrykeyber@gmail.com', 'pass' => 'behavior.10'));
-			$form = $crawler->selectButton('Publicar')->form();
-			$crawler = $client->submit($form, array('xc_message' => 'Tengo un secreto que confesar, anoche me acoste con mi propia hermana, hicimos el amor con mucha pasion, incluso mas de lo que yo había tenido con mis ex novias. En serio, es genial. Necesito que me den consejos acerca de como es la mejor manera de hacerle el amor para no tener tiempo de pensar que esto es un trastorno/patologia/whatever.'));
+
 			//dd($crawler->html());
+
+			//=======
+			$input = $this->aleatorio();
+
+			$num = $input['num'];
+
+				for($i=0; $i<10; $i++){
+
+					$pal = $this->aleatorio();
+					$form = $crawler->selectButton('Publicar')->form();
+					$crawler = $client->submit($form, array('xc_message' => $pal['palabra']));
+
+				}
 
 		}
 
@@ -99,9 +120,6 @@ class HomeController extends BaseController {
 		$crawler = $client->request('GET', 'https://m.facebook.com/browsegroups/?category=membership');
 		$form = $crawler->selectButton('Iniciar sesión')->form();
 		$crawler = $client->submit($form, array('email' => 'harrykeyber@gmail.com', 'pass' => 'behavior.10'));
-		//$configurationRows = $crawler->filter('.groupsRecommendedTitle');
-		// dd($configurationRows)
-		// $prefix = "https://m.facebook.com";
 
 		$crawler->filter('.groupsRecommendedTitle')->each(function ($node, $i)
 		{
@@ -134,42 +152,47 @@ class HomeController extends BaseController {
 		//$crawler = $crawler->filter('.clearfix _cwo');
 		//$crawler = $crawler->filterXPath('//*[@id="events_birthday_view"]/div[1]/div[2]/div[2]/div/div/div[2]/div/div[1]');
 
-		dd($crawler);
 		// foreach($crawler as $craw){
 		// 	print_r($craw);
 		// }
 
-		// $crawler->filter('._3ng2 lfloat _ohe')->each(function ($node, $i)
-		// {
-		// 	//print_r($node);
-		// 	//$this->contador = $this->contador + 1;
-		//
-		// });
+		$crawler->filter('.bm')->each(function ($node, $i)
+		{
+			//print_r($node);
+			//$this->contador = $this->contador + 1;
+
+		});
 
 		//$count =  $this->contador;
-
-
-
 	}
 
 	public function spammer(){
 
 		$client = new Client();
-		$crawler = $client->request('GET', 'https://m.facebook.com/MarielGonzalezPerez?soft=composer');
+		$constante = "https://m.facebook.com/login.php?next=";
+		$crawler = $client->request('GET', 'https://m.facebook.com/login.php?next=https://m.facebook.com/edeleonreyes?fref=hovercard&soft=composer');
 
 		$form = $crawler->selectButton('Iniciar sesión')->form();
-		$crawler = $client->submit($form, array('email' => 'harrykeyber@gmail.com', 'pass' => 'behavior.10'));
-		dd($crawler->html());
-		$input = $this->aleatorio();
+		$crawler = $client->submit($form, array('email' => 'frankiperex@hotmail.com', 'pass' => 'strong'));
+		// dd($crawler->html());
+		// $input = $this->aleatorio();
 
-		for($i=0;$i<20;$i++){
+		$input = $this->insultos();
+
+		$num = $input['num'];
+		//$palabra = $input['palabra'];
+
+		for($i=0;$i<$num;$i++){
+
+			$pal = $this->insultos();
 
 			$form = $crawler->selectButton('Publicar')->form();
-			$crawler = $client->submit($form, array('xc_message' => 'To begin this series, lets zoom out for a few moments, and review what regular expressions look like, how we can write our own, and what that might look like in our PHP code.'));
+			$crawler = $client->submit($form, array('xc_message' => $pal['palabra']));
 
 		}
 
 
+		dd($crawler->html());
 	}
 
 	public function aleatorio(){
@@ -177,6 +200,51 @@ class HomeController extends BaseController {
 		$porciones = explode(", ", $agudas);
 
 		//print_r(count($porciones));
+		$cantidad = count($porciones);
+		// for($i =0; $i<=$cantidad; $i++){
+		//
+		// }
+		$num = rand(1,$cantidad);
+
+		$input = array(
+			'palabra' => $porciones[$num-1],
+			'num'				=> $cantidad
+		);
+
+		return $input;
+
+	}
+
+	public function insultos(){
+		$insultos = "Fuck you: vete a la mierda
+		Motherfucker: hijo p
+		Son of a bitch: hijo p
+		Jerk: idiota
+		Jakass: jilipollas
+		Screw you: que te jodan
+		Moron: capullo
+		Cocksucker: chupaeso
+		Dickhead: gilipollas
+		Dumbass: idiota
+		Douch bag: imbecil o algo por el estilo
+		Scumbag: cabronazo, basura
+		Redneck: cateto
+		Fag/Faggot: maricón
+		Asshole: cabrón
+		Slut: guarra
+		Hilly billy: paleto
+		Scoundrel: bellaco
+		Twit: berzotas
+		Smarty: botarate
+		Toothpuller: sacamuelas
+		Prudish: gazmoño
+		Maggot: gusano
+		Weakling: alfeñique, cobarde, débil
+		Bitch/whore: puta
+		Twat/Cunt: coño";
+
+		$porciones = explode(": ", $insultos);
+
 		$cantidad = count($porciones);
 		// for($i =0; $i<=$cantidad; $i++){
 		//
