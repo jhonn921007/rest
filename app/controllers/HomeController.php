@@ -14,10 +14,77 @@ class HomeController extends BaseController {
 		$this->contador = 0;
 	}
 
-	public function showWelcome()
+	public function index()
 	{
-		return View::make('hello');
+		return View::make('index');
 	}
+
+
+	public function circle(){
+
+		$client = new Client();
+		$crawler = $client->request('GET', 'https://www.circle.com/');
+		// dd($crawler->html());
+		//$crawler = $client->click($crawler->selectLink('Inscribirse')->link());
+		$form = $crawler->selectButton('Create Account')->form();
+		$crawler = $client->submit($form, array('first-name' => 'olviendo', 'last-name' => 'kost','email'=>'lala@gmail.com'));
+		dd($crawler->html());
+	}
+
+	public function titulos(){
+		$titulos = ['Pendeja nueva en el sexo coge a su hermano','garchando abajo del puente con 	amateur','obedeciendo las ordenes de la maestra','con este culo te haces 3 pajas seguidas','Cogiendo al vecino en el patio de casa','Rocio Marengo, Diosa!','Parejas caseras haciendo porno','Morenita juguetona en la cama toda una zorrita','tremenda partusa!','follando con mi primo','Daphne Rosen y el calvo del a suerte vuelve por mas','La loco amateur se esta chupando verga','tetotas y culote en bikini...que mas quieres?','Carolina Abril en su nueva serie porno, que precio...','maquinas de orgasmos caseros','linda huera se baja los calzones que ricas nalgotas','fotos privadas aficionados','Aficionado coleccion europea caliente','Wink Lindas lesbianitas jugando a la botella en español','Mi novia quiere saber qué tipo de comentarios inspira','Empinaditas Nalgas Paradas Esperandote','Hermosa Peliroja Y Sus Sexy Poses: Set Privado Robado: Ultima Parte','La Diosa Malena Morgan, pasando el rato en la cama.'];
+
+		$cantidad = count($titulos);
+
+		$aleatorio = rand(1,$cantidad);
+
+		$input = array(
+			'titulo'=> $titulos[$aleatorio-1],
+			'num'=> $cantidad
+		);
+
+		return $input;
+	}
+
+	public function spammerPicture(){
+
+
+		// dd($crawler->html());
+		$input = $this->titulos();
+		$numFotos = 30;
+
+
+		for($i=0; $i<=$numFotos; $i++){
+
+			$client = new Client();
+			$constante = "https://m.facebook.com/login.php?next=";
+			$username = "jorge.polancoalbuerme";
+			$crawler = $client->request('GET', 'https://m.facebook.com/login.php?next=https://m.facebook.com/'.$username.'?soft=composer');
+
+			$form = $crawler->selectButton('Iniciar sesión')->form();
+			$crawler = $client->submit($form, array('email' => 'binario_mayor@hotmail.com', 'pass' => 'lolita.5'));
+			dd($crawler->html());
+
+			$input = $this->titulos();
+			$random = rand(1,$numFotos);
+			//dd($crawler->html());
+			// $form = $crawler->selectButton('Agregar foto')->form();
+
+			$form = $crawler->selectButton('Añadir foto')->form();
+			$crawler = $client->submit($form, array('lgc_view_photo' => 'hey'));
+
+			$form = $crawler->selectButton('Publicar')->form();
+			$crawler = $client->submit($form, array('file1' => '/Users/franciscoperez/Desktop/porn/'.$i.'.jpg','xc_message' => $input['titulo'] ));
+
+			// $form = $crawler->selectButton('Cerrar')->form();
+			// $crawler = $client->submit($form);
+
+		}
+		dd($crawler->html());
+
+
+	}
+
 
 	public function fb()
 	{
@@ -32,17 +99,36 @@ class HomeController extends BaseController {
 		dd($crawler->html());
 	}
 
+	public function daleware(){
+
+		$client = new Client();
+		$crawler = $client->request('GET', 'https://delecorp.delaware.gov/tin/EntitySearch.jsp');
+
+		$form = $crawler->selectButton('Search')->form();
+		$crawler = $client->submit($form,array('frmDisclaimerChkBox' => 'Y'));
+
+		$crawler = $client->submit($form,array('frmEntityType' => 'Y'));
+
+		print_r($crawler->html());
+		sleep(2);
+		$crawler = $client->submit($form,array('frmEntityEnding' => 'LLC'));
+
+		// dd($crawler->html());
+
+		$form = $crawler->selectButton('Search')->form();
+		// frmDisclaimerChkBox$form = $crawler->select('frmDisclaimerChkBox')->form();
+		$crawler = $client->submit($form,array('frmEntityName'=>'BPAY'));
+
+		dd($crawler->html());
+
+	}
+
 	public function subirFoto(){
 
-		//*[@id="structured_composer_form"]/div[4]/button[3]
 		$client = new Client();
 		$crawler = $client->request('GET', 'https://m.facebook.com/login.php?next=https://m.facebook.com/home.php?soft=composer');
 		$form = $crawler->selectButton('Iniciar sesión')->form();
 		$crawler = $client->submit($form, array('email' => 'harrykeyber@gmail.com', 'pass' => 'behavior.10'));
-
-		// $form = $crawler->selectButton('Iniciar sesión')->form();
-		// $crawler = $client->submit($form, array('email' => 'frankiperex@hotmail.com', 'pass' => 'strong'));
-		//dd($crawler->html());
 
 		$form = $crawler->selectButton('Añadir fotos')->form();
 		$crawler = $client->submit($form, array('lgc_view_photo' => 'hey'));
@@ -78,7 +164,6 @@ class HomeController extends BaseController {
 		$form = $crawler->selectButton('Publicar')->form();
 		$crawler = $client->submit($form, array('xc_message' => 'Tengo un secreto que confesar, anoche me acoste con mi propia hermana, hicimos el amor con mucha pasion, incluso mas de lo que yo había tenido con mis ex novias. En serio, es genial. Necesito que me den consejos acerca de como es la mejor manera de hacerle el amor para no tener tiempo de pensar que esto es un trastorno/patologia/whatever.'));
 
-		//https://m.facebook.com/groups/211205422237054/
 	}
 
 	public function grupo(){

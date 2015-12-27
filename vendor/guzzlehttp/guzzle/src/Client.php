@@ -228,6 +228,7 @@ class Client implements ClientInterface
             'exceptions'      => true,
             'decode_content'  => true,
             'verify'          => __DIR__ . '/cacert.pem'
+            // 'verify'          => false
         ];
 
         // Use the bundled cacert if it is a regular file, or set to true if
