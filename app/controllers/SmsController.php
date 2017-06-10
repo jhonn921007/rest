@@ -29,7 +29,7 @@ class SmsController extends \BaseController {
 		//$crawler = $client->click($crawler->selectLink('Inscribirse')->link());
 		// dd($crawler->html());
 		$form = $crawler->selectButton('Create Melt Mail')->form();
-		$crawler = $client->submit($form, array('meltmail[email]' => 'perfumefrankito@hotmail.com'));
+		$crawler = $client->submit($form, array('meltmail[email]' => 'sample@mail.com'));
 
 		$crawler->filter('#the_meltmail');
 
@@ -51,7 +51,7 @@ class SmsController extends \BaseController {
 		$client = new Client();
 		$crawler = $client->request('GET', 'http://notsharingmy.info/');
 		$form = $crawler->selectButton('Create Melt Mail')->form();
-		$crawler = $client->submit($form, array('email' => 'franciscoperez583@gmail.com'));
+		$crawler = $client->submit($form, array('email' => 'sample@mail.com'));
 
 	}
 
